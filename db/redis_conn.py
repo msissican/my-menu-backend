@@ -7,26 +7,35 @@ import redis
 pool = redis.ConnectionPool(host="localhost", port=6379, db=0)
 
 
-class RedisConn:
+class RedisClient:
     def __init__(self) -> None:
-        self.host = "localhost"
-        self.port = 6379
-        self.db = 0
         self.pool = redis.ConnectionPool(
-            host=self.host,
-            port=self.port,
-            db=self.db,
+            host="localhost",
+            port=6379,
+            db=0,
+            max_connections=20,
             decode_responses=True,
         )
         self.redis_conn = redis.Redis(connection_pool=self.pool)
 
+    def get_connection(self) -> redis.Redis:
+        if self.pool is None:
+            raise RuntimeError("Redis Connection Pool Not Initialized")
+        return redis.Redis(connection_pool=self.pool)
 
-redis_client = RedisConn()
+    def close_pool(self):
+        if self.pool:
+            self.pool.disconnect()
+            self.pool = None
+
+
+print("redis connection create")
+redis_client = RedisClient()
 
 
 @contextmanager
 def context_redis_conn() -> Generator[redis.Redis, Any, None]:
-    redis_conn = redis_client.redis_conn
+    redis_conn = redis_client.get_connection()
     try:
         yield redis_conn
 

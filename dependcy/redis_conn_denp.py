@@ -1,11 +1,13 @@
-from db.redis_conn import redis_client
-import redis
-from typing import Any
 from collections.abc import Generator
+from typing import Any
+
+import redis
+
+from db.redis_conn import redis_client
 
 
 def depend_redis_conn() -> Generator[redis.Redis, Any, None]:
-    redis_conn = redis_client.redis_conn
+    redis_conn = redis_client.get_connection()
     try:
         yield redis_conn
 

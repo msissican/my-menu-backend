@@ -424,6 +424,7 @@ dependencies = [
     { name = "pymysql" },
     { name = "redis" },
     { name = "sqlalchemy" },
+    { name = "uvicorn" },
 ]
 
 [package.metadata]
@@ -434,6 +435,7 @@ requires-dist = [
     { name = "pymysql", specifier = ">=1.1.1" },
     { name = "redis", specifier = ">=6.2.0" },
     { name = "sqlalchemy", specifier = ">=2.0.41" },
+    { name = "uvicorn", specifier = ">=0.35.0" },
 ]
 
 [[package]]

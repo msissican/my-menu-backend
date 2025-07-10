@@ -2,6 +2,7 @@ from contextlib import asynccontextmanager
 
 import redis
 from fastapi import Depends, FastAPI
+from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 from sqlalchemy.orm import Session
 
@@ -17,10 +18,19 @@ async def lifespan(app: FastAPI):
     yield
 
     engine.dispose()
-    redis_client.redis_conn.close()
+    redis_client.close_pool()
+    print("db engine close")
 
 
 app = FastAPI(lifespan=lifespan)
+
+app.add_middleware(
+    middleware_class=CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
 
 @app.get("/")

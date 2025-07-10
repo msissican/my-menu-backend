@@ -9,6 +9,7 @@ class Orders(Base):
 
     id = Column(Integer, primary_key=True, nullable=False, index=True, autoincrement=True)
     order_id = Column(Integer, nullable=False, index=True)
+    user_id = Column(Integer, nullable=False)
     dining_table = Column(Integer, nullable=False, index=True)
     complete = Column(Boolean, default=False, nullable=False)
     dish_id = Column(Integer, nullable=False)
