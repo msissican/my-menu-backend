@@ -8,6 +8,7 @@ from models.config import Base as ConfigBase
 from models.dishes import Base as DishesBase
 from models.ingredients import Base as IngredientBase
 from models.orders import Base as OrderBase
+from models.taste import Base as TasteBase
 from models.user import Base as UserBase
 from models.user_extend import Base as UserExtendBase
 
@@ -27,7 +28,7 @@ config.set_main_option("sqlalchemy.url", DATABASE_URL)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = MetaData()
-for base in [ConfigBase, DishesBase, IngredientBase, OrderBase, UserBase, UserExtendBase]:
+for base in [ConfigBase, DishesBase, IngredientBase, OrderBase, UserBase, UserExtendBase, TasteBase]:
     for table in base.metadata.tables.values():
         target_metadata._add_table(table.name, table.schema, table)
 
