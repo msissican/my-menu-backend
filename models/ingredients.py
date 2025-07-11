@@ -7,8 +7,8 @@ Base = declarative_base()
 class Ingredients(Base):
     __tablename__ = "ingredients"
 
-    id = Column(Integer, primary_key=True, nullable=False, index=True, autoincrement=True)
-    ingredient = Column(String(255), nullable=False)
+    id = Column(Integer, primary_key=True, nullable=False, autoincrement=True)
+    ingredient = Column(String(255), nullable=False, unique=True)
     has = Column(Boolean, nullable=False)
     count = Column(Integer, nullable=False)
     in_refrigerator = Column(Boolean, nullable=False)

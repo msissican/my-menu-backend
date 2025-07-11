@@ -5,9 +5,12 @@ from sqlalchemy import MetaData, engine_from_config, pool
 from alembic import context
 from db.mysql_conn import DATABASE_URL
 from models.config import Base as ConfigBase
+from models.dish_ingredient import Base as DishIngredientBase
+from models.dish_taste import Base as DishTasteBase
 from models.dishes import Base as DishesBase
 from models.ingredients import Base as IngredientBase
-from models.orders import Base as OrderBase
+from models.orders_detail import Base as OrderDetailBase
+from models.orders_master import Base as OrderMasterBase
 from models.taste import Base as TasteBase
 from models.user import Base as UserBase
 from models.user_extend import Base as UserExtendBase
@@ -28,7 +31,18 @@ config.set_main_option("sqlalchemy.url", DATABASE_URL)
 # from myapp import mymodel
 # target_metadata = mymodel.Base.metadata
 target_metadata = MetaData()
-for base in [ConfigBase, DishesBase, IngredientBase, OrderBase, UserBase, UserExtendBase, TasteBase]:
+for base in [
+    ConfigBase,
+    DishIngredientBase,
+    DishTasteBase,
+    DishesBase,
+    IngredientBase,
+    OrderDetailBase,
+    OrderMasterBase,
+    TasteBase,
+    UserExtendBase,
+    UserBase,
+]:
     for table in base.metadata.tables.values():
         target_metadata._add_table(table.name, table.schema, table)
 
